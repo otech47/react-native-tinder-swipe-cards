@@ -96,6 +96,7 @@ export default class SwipeCards extends Component {
     yupText: React.PropTypes.string,
     maybeText: React.PropTypes.string,
     noText: React.PropTypes.string,
+    onClickHandler: React.PropTypes.func,
     renderCard: React.PropTypes.func,
     cardRemoved: React.PropTypes.func,
     dragY: React.PropTypes.bool,
@@ -122,6 +123,7 @@ export default class SwipeCards extends Component {
     nopeText: "Nope!",
     maybeText: "Maybe!",
     yupText: "Yup!",
+    onClickHandler: () => { alert('tap') },
     onDragStart: () => {},
     onDragRelease: () => {},
     cardRemoved: (ix) => null,
@@ -178,6 +180,10 @@ export default class SwipeCards extends Component {
         this.props.onDragRelease()
         this.state.pan.flattenOffset();
         let velocity;
+        if (Math.abs(dx) <= 5 && Math.abs(dy) <= 5)   //meaning the gesture did not cover any distance
+        {
+          this.props.onClickHandler(this.state.card)
+        }
 
         if (vx > 0) {
           velocity = clamp(vx, 3, 5);
